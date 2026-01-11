@@ -1,0 +1,15 @@
+{
+  "name": "bot-rpg-runeterra",
+  "version": "1.5.0",
+  "description": "Bot de RPG (Runeterra RP) com criação de personagem via tickets + formulário.",
+  "main": "src/index.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node src/index.js",
+    "register:commands": "node scripts/registerCommands.js"
+  },
+  "dependencies": {
+    "discord.js": "^14.16.3",
+    "dotenv": "^16.4.5"
+  }
+}

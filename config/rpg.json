@@ -1,0 +1,60 @@
+{
+  "origens": [
+    "Demacia",
+    "Noxus",
+    "Ionia",
+    "Freljord",
+    "Piltover",
+    "Zaun",
+    "Shurima",
+    "Targon",
+    "Ilhas das Sombras",
+    "Bandle"
+  ],
+  "racas": [
+    "Humano",
+    "Yordle",
+    "Vastaya",
+    "Ascendente",
+    "Golem/Construído",
+    "Outro"
+  ],
+  "classes": [
+    "Guerreiro",
+    "Mago",
+    "Atirador",
+    "Assassino",
+    "Suporte",
+    "Tanque",
+    "Especialista"
+  ],
+  "runas": [
+    "Precisão",
+    "Dominação",
+    "Feitiçaria",
+    "Determinação",
+    "Inspiração"
+  ],
+  "retratos": [
+    {
+      "nome": "Demacia — Cavaleiro",
+      "url": "https://i.imgur.com/7Qp9Z4b.png"
+    },
+    {
+      "nome": "Noxus — Legionária",
+      "url": "https://i.imgur.com/bu7kOeG.png"
+    },
+    {
+      "nome": "Ionia — Mística",
+      "url": "https://i.imgur.com/8S2TQ2Y.png"
+    },
+    {
+      "nome": "Zaun — Inventor",
+      "url": "https://i.imgur.com/8J4oHc7.png"
+    },
+    {
+      "nome": "Freljord — Caçadora",
+      "url": "https://i.imgur.com/qw9iQpD.png"
+    }
+  ]
+}
