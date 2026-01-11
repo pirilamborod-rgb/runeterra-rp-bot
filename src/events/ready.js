@@ -9,8 +9,8 @@ module.exports = {
 
     const channelId = client.config?.characterCreationChannelId;
     if (channelId) {
-      await ensureWebhookAndIntro(client, channelId, client.config).catch((e) => {
-        log(`Falha ao enviar intro via webhook: ${e?.message || e}`);
+      await ensureWebhookAndIntro(client, channelId, client.config, { force: true }).catch((e) => {
+        log(`Falha ao enviar intro: ${e?.message || e}`);
       });
     }
   }

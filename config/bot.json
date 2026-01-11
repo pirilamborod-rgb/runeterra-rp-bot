@@ -1,8 +1,8 @@
 {
-  "clientId": "1456357919418224653",
-  "guildId": "1455170276240134195",
-  "ticketCategoryId": "1459907593035190385",
-  "ticketAutoDeleteMinutes": 5,
+  "clientId": "COLOQUE_O_CLIENT_ID_DO_BOT",
+  "guildId": "COLOQUE_O_ID_DO_SEU_SERVIDOR",
+  "ticketCategoryId": "",
+  "ticketAutoDeleteMinutes": 20,
   "runepoints": {
     "messagePoints": 1,
     "reactionPoints": 2,
@@ -12,5 +12,6 @@
   "characterCreationChannelId": "1459886269373878272",
   "adminRoleId": "",
   "siteUrl": "https://runeterra-rp.weebly.com/",
-  "discordInviteUrl": "https://discord.gg/M3cuVGCQf5"
+  "discordInviteUrl": "https://discord.gg/M3cuVGCQf5",
+  "introVersion": 1
 }

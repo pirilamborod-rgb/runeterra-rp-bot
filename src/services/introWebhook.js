@@ -23,30 +23,10 @@ function channelLink(guildId, channelId) {
   return `https://discord.com/channels/${guildId}/${channelId}`;
 }
 
-async function ensureWebhookAndIntro(client, channelId, cfg = {}) {
-  if (!channelId) return;
-
-  const state = readState();
-  if (state.sentIntro) return; // manda só uma vez
-
-  const channel = await client.channels.fetch(channelId).catch(() => null);
-  if (!channel) return;
-
-  const hooks = await channel.fetchWebhooks().catch(() => null);
-  let hook = hooks?.find(h => h.owner?.id === client.user.id);
-
-  if (!hook) {
-    hook = await channel.createWebhook({
-      name: "Runeterra RP — Criação",
-      avatar: client.user.displayAvatarURL()
-    });
-  }
-
-  const wh = new WebhookClient({ id: hook.id, token: hook.token });
-
+function buildIntroPayload(channel, cfg = {}) {
   const siteUrl = cfg.siteUrl || "https://runeterra-rp.weebly.com/";
   const discordUrl = cfg.discordInviteUrl || "https://discord.gg/M3cuVGCQf5";
-  const createChUrl = channelLink(channel.guildId, channelId);
+  const createChUrl = channelLink(channel.guildId, channel.id);
 
   const emb = new EmbedBuilder()
     .setTitle("🧾 Criação de Personagem — Runeterra RP")
@@ -76,11 +56,56 @@ async function ensureWebhookAndIntro(client, channelId, cfg = {}) {
     new ButtonBuilder().setStyle(ButtonStyle.Link).setLabel("📌 Este canal").setURL(createChUrl)
   );
 
-  await wh.send({ embeds: [emb], components: [row] });
+  return { embeds: [emb], components: [row] };
+}
+
+async function ensureWebhookAndIntro(client, channelId, cfg = {}, opts = {}) {
+  if (!channelId) return;
+
+  const state = readState();
+  const version = String(cfg.introVersion || "0");
+  const alreadySentSameVersion = state.sentIntro && String(state.introVersion || "0") === version;
+
+  if (!opts.force && alreadySentSameVersion) return;
+
+  const channel = await client.channels.fetch(channelId).catch(() => null);
+  if (!channel || !channel.isTextBased?.()) return;
+
+  const payload = buildIntroPayload(channel, cfg);
+
+  let ok = false;
+  try {
+    const hooks = await channel.fetchWebhooks();
+    let hook = hooks.find(h => h.owner?.id === client.user.id);
+
+    if (!hook) {
+      hook = await channel.createWebhook({
+        name: "Runeterra RP — Criação",
+        avatar: client.user.displayAvatarURL()
+      });
+    }
+
+    const wh = new WebhookClient({ id: hook.id, token: hook.token });
+    await wh.send(payload);
+    ok = true;
+  } catch {}
+
+  if (!ok) {
+    await channel.send(payload).catch(() => null);
+  }
 
   state.sentIntro = true;
   state.sentAt = new Date().toISOString();
+  state.introVersion = version;
   writeState(state);
 }
 
-module.exports = { ensureWebhookAndIntro };
+function resetIntroState() {
+  const state = readState();
+  delete state.sentIntro;
+  delete state.sentAt;
+  delete state.introVersion;
+  writeState(state);
+}
+
+module.exports = { ensureWebhookAndIntro, resetIntroState, buildIntroPayload };
